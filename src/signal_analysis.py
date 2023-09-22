@@ -311,8 +311,8 @@ class mytools:
         win = cosine_taper(len(fspo),coswin)
         fspo = fspo * win
     
-        velyy = np.gradient(fspo,delta)
-        accyy = np.gradient(velyy, delta)
+        velyy = np.diff(fspo,prepend=0)/delta #using this instead of np.grad as np.diff/delta is the exact inverse operation as sp.cumsum*delta used in lines 299 and 306, this way the effects on the fourier spectra cancel out after returning to acceleration from displacement
+        accyy = np.diff(velyy,prepend=0)/delta #same comment (probably the same change has to be done some lines below for the baseline_vel function)
         accyy = accyy/const
     
     
